@@ -1,0 +1,45 @@
+version: '3'
+services:
+    diary_web:
+        container_name: diary-web
+        hostname: "diary.local.dev"
+        build: build/web
+        volumes:
+            - ../../:/var/www/sources
+        depends_on:
+            - diary_database
+        networks:
+            diary_net:
+                ipv4_address: 192.168.20.10
+
+    diary_database:
+        hostname: "diary-db.local.dev"
+        container_name: diary-database
+        build: build/db
+        env_file:
+            - env/mysql.env
+        tty: true
+        networks:
+            diary_net:
+                ipv4_address: 192.168.20.20
+
+    diary_phpmyadmin:
+        hostname: "diary-pma.local.dev"
+        container_name: diary-phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        env_file:
+            - env/pma.env
+        restart: always
+        depends_on:
+            - diary_database
+        networks:
+            diary_net:
+                ipv4_address: 192.168.20.21
+
+networks:
+    diary_net:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+            - subnet: 192.168.20.0/24
