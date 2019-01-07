@@ -1,3 +1,5 @@
-<p>
-  dish works!
-</p>
+<div *ngFor="let dish of dishes$ | async">
+  <span>{{ dish.get('id') }}</span>
+  <span>{{ dish.get('name') }}</span>
+  <span>{{ dish.get('calories') }}</span>
+</div>

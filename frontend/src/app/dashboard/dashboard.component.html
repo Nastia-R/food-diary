@@ -1,9 +1,5 @@
-<h3>
-  Dashboard
-</h3>
+<div class="container">
+  <h3>Dashboard</h3>
 
-<div *ngFor="let dish of dishes$ | async">
-  <span>{{ dish.get('id') }}</span>
-  <span>{{ dish.get('name') }}</span>
-  <span>{{ dish.get('calories') }}</span>
+  <app-dishes></app-dishes>
 </div>
